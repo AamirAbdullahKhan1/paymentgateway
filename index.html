@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dummy Payment Gateway</title>
+    <title>Payment Gateway</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,12 +37,21 @@
         .btn:hover {
             background-color: #45a049;
         }
+        .qrcode-container {
+            margin-top: 20px;
+        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Payment Confirmation</h1>
         <p class="amount">Amount to Pay: ₹<span id="amount"></span></p>
+        
+        <div class="qrcode-container">
+            <div id="qrcode"></div>
+        </div>
+        
         <button class="btn" onclick="confirmPayment()">Confirm Payment</button>
     </div>
 
@@ -52,10 +61,28 @@
         const amount = urlParams.get('amount');
         document.getElementById('amount').innerText = amount;
 
+        function generateQRCode(amount) {
+            // Clear any existing QR code
+            document.getElementById('qrcode').innerHTML = "";
+
+            // Generate a unique QR code with the total amount
+            new QRCode(document.getElementById("qrcode"), {
+                text: `Amount: ₹${amount}`,
+                width: 150,
+                height: 150,
+            });
+        }
+
+        // Generate QR code when the page loads
+        window.onload = function() {
+            generateQRCode(amount);
+        };
+
         function confirmPayment() {
             alert('Payment Successful!');
         }
     </script>
 </body>
 </html>
+
 
