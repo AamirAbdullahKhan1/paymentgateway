@@ -20,6 +20,8 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            max-width: 500px; /* Optional: Restricts container width */
+            width: 100%; /* Ensures container takes full width */
         }
         .amount {
             font-size: 24px;
@@ -33,12 +35,19 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 20px; /* Space above the button */
         }
         .btn:hover {
             background-color: #45a049;
         }
         .qrcode-container {
+            display: flex;
+            justify-content: center; /* Center align QR code horizontally */
             margin-top: 20px;
+        }
+        #qrcode {
+            width: 150px; /* Fixed size for QR code */
+            height: 150px; /* Fixed size for QR code */
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -84,5 +93,6 @@
     </script>
 </body>
 </html>
+
 
 
