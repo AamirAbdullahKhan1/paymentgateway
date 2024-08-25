@@ -37,13 +37,25 @@
         .btn:hover {
             background-color: #45a049;
         }
+        .qrcode-container {
+            margin-top: 20px;
+        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Payment Confirmation</h1>
         <p class="amount">Amount to Pay: ₹<span id="amount"></span></p>
-        <button class="btn" onclick="confirmPayment()">Confirm Payment</button>
+        
+        <p>Select Payment Method:</p>
+        <button class="btn" onclick="generateQRCode(amount, 'upi')">UPI</button>
+        <button class="btn" onclick="generateQRCode(amount, 'paytm')">Paytm</button>
+        <button class="btn" onclick="generateQRCode(amount, 'googlepay')">Google Pay</button>
+        
+        <div class="qrcode-container">
+            <div id="qrcode"></div>
+        </div>
     </div>
 
     <script>
@@ -51,6 +63,27 @@
         const urlParams = new URLSearchParams(window.location.search);
         const amount = urlParams.get('amount');
         document.getElementById('amount').innerText = amount;
+
+        function generateQRCode(amount, method) {
+            // Clear any existing QR code
+            document.getElementById('qrcode').innerHTML = "";
+
+            let paymentText = `Amount: ₹${amount}`;
+            if (method === 'upi') {
+                paymentText += " (UPI)";
+            } else if (method === 'paytm') {
+                paymentText += " (Paytm)";
+            } else if (method === 'googlepay') {
+                paymentText += " (Google Pay)";
+            }
+
+            // Generate the new QR code
+            new QRCode(document.getElementById("qrcode"), {
+                text: paymentText,
+                width: 150,
+                height: 150,
+            });
+        }
 
         function confirmPayment() {
             alert('Payment Successful!');
